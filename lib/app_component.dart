@@ -1,38 +1,26 @@
 import 'package:angular/angular.dart';
-import 'package:angular_tour_of_heroes_v2/src/hero_component.dart';
-import 'package:angular_tour_of_heroes_v2/src/hero_service.dart';
-import 'src/hero.dart';
-import 'src/mock_heroes.dart';
+import 'package:angular_router/angular_router.dart';
+
+import 'src/hero_service.dart';
+import 'src/routes.dart';
 
 @Component(
-  selector: 'my-app',//this a tag in the index html
-  templateUrl: 'app_component.html',
+  selector: 'my-app',
+  template: '''
+    <h1>{{title}}</h1>
+    <nav>
+      <a [routerLink]="RoutePaths.dashboard.toUrl()"
+         [routerLinkActive]="'active'">Dashboard</a>
+      <a [routerLink]="RoutePaths.heroes.toUrl()"
+         [routerLinkActive]="'active'">Heroes</a>
+    </nav>
+    <router-outlet [routes]="Routes.all"></router-outlet>
+  ''',
   styleUrls: ['app_component.css'],
-  directives: [coreDirectives, HeroComponent],
-  providers: [ClassProvider(HeroService)],//this tells class how to create injected dependency
+  directives: [routerDirectives],
+  providers: [ClassProvider(HeroService)],
+  exports: [RoutePaths, Routes],
 )
 class AppComponent {
   final title = 'Tour of Heroes';
-  final HeroService _heroService;
-
-  //constructor sets HeroService
-  AppComponent(this._heroService);
-
-  List<Hero> heroes = mockHeroes;
-  Hero selected;
-  void onSelect(Hero hero) => selected = hero;
-
-  Future<void> _getHeroes() async {
-    //synchronous
-//    heroes =  _heroService.getAll();
-
-    //asynchronous
-//  _heroService.getAll().then((heroes) => this.heroes = heroes);
-
-    //asynchronous
-    heroes = await _heroService.getAll();
-
-  }
-
-  void ngOnInit() => _getHeroes();
 }
