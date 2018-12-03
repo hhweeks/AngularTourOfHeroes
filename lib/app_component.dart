@@ -1,5 +1,5 @@
 import 'package:angular/angular.dart';
-import 'package:angular_forms/angular_forms.dart';
+import 'package:angular_tour_of_heroes_v2/src/hero_component.dart';
 import 'src/hero.dart';
 import 'src/mock_heroes.dart';
 
@@ -7,7 +7,7 @@ import 'src/mock_heroes.dart';
   selector: 'my-app',//this a tag in the index html
   templateUrl: 'app_component.html',
   styleUrls: ['app_component.css'],
-  directives: [coreDirectives, formDirectives],
+  directives: [coreDirectives, HeroComponent],
 )
 class AppComponent {
   final title = 'Tour of Heroes';
